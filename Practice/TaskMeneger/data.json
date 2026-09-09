@@ -1,0 +1,26 @@
+{
+  "tasks": [
+    {
+      "title": "sa;kdjsadk",
+      "description": "sa;djasdj;",
+      "priority": "MEDIUM",
+      "completed": true,
+      "id": "srnocaoNymA"
+    },
+    {
+      "title": "jwhsadbjsa",
+      "description": "saljdhlsjabdlb",
+      "priority": "MEDIUM",
+      "completed": true,
+      "id": "VEUOIZrtWU0"
+    },
+    {
+      "title": "React ",
+      "description": "Create application using reducer & router",
+      "priority": "HIGH",
+      "completed": true,
+      "id": "FQV3bPO0Gv8"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
