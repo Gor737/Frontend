@@ -8,6 +8,8 @@ import { Account } from "../pages/protected/Account/Account";
 import { Settings } from "../pages/protected/Account/Settings";
 import { NotFound } from "../pages/NotFound";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { UserAccount } from "../pages/protected/UserAccount/UserAccount";
+import { FollowRequets } from "../pages/protected/UserAccount/components/FollowRequests";
 
 export const routes = createBrowserRouter([
   {
@@ -23,14 +25,16 @@ export const routes = createBrowserRouter([
     path: "profile",
     element: <ProtectedRoutes />,
     children: [
-      { 
-        path: "", element: <AccountLayout /> ,
+      {
+        path: "",
+        element: <AccountLayout />,
         children: [
-            { index: true, element: <Account /> },
-            { path: "settings", element: <Settings /> },
-        ]
+          { index: true, element: <Account /> },
+          { path: "settings", element: <Settings /> },
+          { path: ":username", element: <UserAccount /> },
+          {path: "requests", element: <FollowRequets /> }
+        ],
       },
-
     ],
   },
   { path: "*", element: <NotFound /> },

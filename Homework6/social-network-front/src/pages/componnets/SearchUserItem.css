@@ -1,0 +1,63 @@
+.search-user-item:last-child {
+  border-bottom: none;
+}
+
+.search-user-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  background: #111114;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.search-user-item:hover {
+  background: #19191d;
+}
+
+.search-user-item__avatar {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  border: 1px solid rgba(245, 197, 66, 0.35);
+}
+
+.search-user-item__avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.search-user-item__info {
+  min-width: 0;
+}
+
+.search-user-item__username {
+  margin: 0;
+
+  color: #f5c542;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-user-item__name {
+  margin: 3px 0 0;
+
+  color: #8e8e93;
+
+  font-size: 13px;
+}

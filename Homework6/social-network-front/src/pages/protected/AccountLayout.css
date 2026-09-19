@@ -1,0 +1,30 @@
+.account-content {
+  position: relative;
+}
+
+/* Overlay */
+.account-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  z-index: 10;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+/* Search is open */
+.account-content.search-open .account-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}

@@ -3,23 +3,45 @@ import { AuthContext } from "../../../context/AuthContext/AuthContext";
 import type { AuthContextType } from "../../../types/auth";
 import { Camera, Settings } from "lucide-react";
 import "./Account.css";
-import { changeAvatar, changeBio } from "../../../services/accounts";
-import type { BioType } from "../../../types/account";
+import { changeAvatar, changeBio, getUserProfile } from "../../../services/accounts";
+import type { BioType, UserProfile } from "../../../types/account";
 import { useNavigate } from "react-router-dom";
+import { AddPost } from "./components/AddPost";
+import { ShowPosts } from "./components/ShowPosts";
 
 export const Account = () => {
   const authContext = useContext<AuthContextType | null>(AuthContext);
   const [bio, setBio] = useState<string>(authContext?.user?.bio ?? "");
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState<boolean>(false);
   const userBio = useRef<HTMLParagraphElement | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const navigate = useNavigate();
 
   const isFirstRender = useRef(true);
 
+  const fetchUser = async (username:string) => {
+    const res = await getUserProfile(username);
+    setUserProfile(res.user);
+  }
+
+  const onPostDeleted = () => {
+    const username = authContext?.user?.username;
+    if(!username) return;
+    fetchUser(username);
+  }
+
   useEffect(() => {
-    if (isFirstRender) {
+    const username = authContext?.user?.username;
+    if(!username) return;
+    fetchUser(username);
+  },[authContext?.user?.username])
+
+  useEffect(() => {
+    if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
+
     const timer = setTimeout(async () => {
       const newBio: BioType = { bio };
       await changeBio(newBio);
@@ -44,6 +66,7 @@ export const Account = () => {
     return null;
   }
 
+   
   const onChangeBio = () => {
     const newBio = userBio.current?.textContent || "No Bio Yet.";
     setBio(newBio);
@@ -60,6 +83,8 @@ export const Account = () => {
     }
   };
 
+  const closeCreatePost = () => setIsCreatePostOpen(false);
+  const openCreatePost = () => setIsCreatePostOpen(true);
 
   return (
     <main className="account">
@@ -134,9 +159,19 @@ export const Account = () => {
 
       <section className="posts-section">
         <h2>Posts</h2>
+        <button onClick={openCreatePost}>Add new post</button>
+        {isCreatePostOpen && (
+          <div className="create-post-overlay">
+            <div className="create-post-modal">
+              <AddPost closeCreatePost={closeCreatePost} />
+            </div>
+          </div>
+        )}
 
         <div className="empty-posts">
-          <p>No posts yet.</p>
+          {!userProfile ? <p>No posts yet.</p> : userProfile.posts.map(post => {
+            return <ShowPosts key={post.id} post={post} onPostDeleted = {onPostDeleted}/> 
+          })}
         </div>
       </section>
     </main>
